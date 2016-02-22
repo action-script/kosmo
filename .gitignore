@@ -1,0 +1,5 @@
+node_modules
+public/externals
+public/javascript
+public/dist
+*.swp

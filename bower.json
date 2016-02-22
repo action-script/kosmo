@@ -1,0 +1,19 @@
+{
+  "name": "world3D",
+  "description": "random webgl 3D scenarios",
+  "main": "app.js",
+  "authors": [
+    "Nuño de la Serna"
+  ],
+  "license": "GNU-3.0",
+  "moduleType": [],
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

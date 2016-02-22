@@ -1,0 +1,19 @@
+{
+   "name": "world3D",
+   "version": "0.0.1",
+   "description": "random webgl 3D scenarios",
+   "main": "app.js",
+   "scripts": {
+      "build": "babel server/src/*.js -d server/build",
+      "test": "echo \"Error: no test specified\" && exit 1"
+   },
+   "author": "Nuño de la Serna",
+   "license": "GNU-3.0",
+   "devDependencies": {
+      "grunt": "~0.4.5",
+      "babel-cli": "~6.5.1"
+   },
+   "dependencies": {
+      "koa": "~1.1.2"
+   }
+}
