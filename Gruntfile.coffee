@@ -7,14 +7,41 @@ module.exports = (grunt) ->
             comments: false
          all:
             files: [
-               expand: true,
-               cwd: 'dev/src',
-               src: ['**/*.es6'],
-               dest: 'dev/build',
+               expand: true
+               cwd: 'app/assets'
+               src: ['**/*.es6']
+               dest: 'app/build'
                ext: '.js'
             ]
 
-   grunt.loadNpmTasks('grunt-babel')
+      jslint:
+         server:
+            src: [ 'app/assets/**/*.es6' ]
+            directives:
+               node: true
+               todo: true
+            options:
+               edition: 'latest'
+               errorsOnly: false
+               failOnError: false
+               log: 'out/server-lint.log'
+               checkstyle: 'out/server-checkstyle.xml'
+         client:
+            src: [ 'public/assets/**/*.es6' ]
+            directives:
+               browser: true
+               predef: [ 'jQuery' ]
+               todo: true
+            options:
+               edition: 'latest'
+               errorsOnly: false
+               failOnError: false
+               log: 'out/client-lint.log'
+               checkstyle: 'out/client-checkstyle.xml'
 
-   grunt.registerTask("default", ["babel"])
+
+   grunt.loadNpmTasks('grunt-babel')
+   grunt.loadNpmTasks('grunt-jslint')
+
+   grunt.registerTask("default", ["jslint:server", "jslint:client","babel"])
 
