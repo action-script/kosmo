@@ -1,20 +1,20 @@
 {
-   "name": "world3D",
-   "version": "0.0.3",
-   "description": "random webgl 3D scenarios",
-   "main": "app.js",
-   "scripts": {
-      "start": "node app/build/app",
-      "test": "echo \"Error: no test specified\" && exit 1"
-   },
-   "author": "Nuño de la Serna",
-   "license": "GNU-3.0",
-   "devDependencies": {
-      "grunt": "~0.4.5",
-      "grunt-babel": "~6.0.0",
-      "grunt-jslint": "~1.1.14"
-   },
-   "dependencies": {
-      "koa": "~1.1.2"
-   }
+  "name": "world3D",
+  "version": "0.0.4",
+  "description": "random webgl 3D scenarios",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app/build/app",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nuño de la Serna",
+  "license": "GNU-3.0",
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-babel": "~6.0.0",
+    "grunt-eslint": "~18.0.0"
+  },
+  "dependencies": {
+    "koa": "~1.1.2"
+  }
 }

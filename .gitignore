@@ -1,6 +1,6 @@
 node_modules
 app/build
-out
 public/externals
 public/build
+logs
 *.swp

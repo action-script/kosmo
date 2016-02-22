@@ -14,34 +14,17 @@ module.exports = (grunt) ->
                ext: '.js'
             ]
 
-      jslint:
-         server:
-            src: [ 'app/assets/**/*.es6' ]
-            directives:
-               node: true
-               todo: true
-            options:
-               edition: 'latest'
-               errorsOnly: false
-               failOnError: false
-               log: 'out/server-lint.log'
-               checkstyle: 'out/server-checkstyle.xml'
-         client:
-            src: [ 'public/assets/**/*.es6' ]
-            directives:
-               browser: true
-               predef: [ 'jQuery' ]
-               todo: true
-            options:
-               edition: 'latest'
-               errorsOnly: false
-               failOnError: false
-               log: 'out/client-lint.log'
-               checkstyle: 'out/client-checkstyle.xml'
-
+      eslint:
+         options:
+            configFile: "eslint.json"
+#            outputFile: "logs/eslint_report.log"
+         target: [
+            "app/assets/**/*.es6"
+            "public/assets/scripts/**/*.es6"
+         ]
 
    grunt.loadNpmTasks('grunt-babel')
-   grunt.loadNpmTasks('grunt-jslint')
+   grunt.loadNpmTasks('grunt-eslint')
 
-   grunt.registerTask("default", ["jslint:server", "jslint:client","babel"])
+   grunt.registerTask("default", ["eslint","babel"])
 
