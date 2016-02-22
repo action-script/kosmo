@@ -4,7 +4,7 @@
   "description": "random webgl 3D scenarios",
   "main": "app.js",
   "scripts": {
-    "start": "node app/build/app",
+    "start": "node app/build/app --harmony",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Nuño de la Serna",
@@ -12,9 +12,18 @@
   "devDependencies": {
     "grunt": "~0.4.5",
     "grunt-babel": "~6.0.0",
-    "grunt-eslint": "~18.0.0"
+    "grunt-eslint": "~18.0.0",
+    "babel-plugin-transform-regenerator": "~6.5.2",
+    "babel-plugin-transform-es2015-arrow-functions": "~6.5.2",
+    "babel-plugin-transform-es2015-classes": "~6.5.2",
+    "babel-plugin-transform-es2015-destructuring": "~6.5.0",
+    "babel-plugin-transform-es2015-literals": "~6.5.0",
+    "babel-plugin-transform-es2015-object-super": "~6.5.0",
+    "babel-plugin-transform-es2015-parameters": "~6.5.0",
+    "babel-plugin-transform-es2015-typeof-symbol": "~6.5.0"
   },
   "dependencies": {
-    "koa": "~1.1.2"
+    "koa": "~1.1.2",
+    "koa-hbs": "~0.8.0"
   }
 }

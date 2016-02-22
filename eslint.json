@@ -13,7 +13,6 @@
       }
    },
 
-
    "rules": {
       "quotes" : [2, "single"]
    }

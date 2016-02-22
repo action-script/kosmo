@@ -3,8 +3,18 @@ module.exports = (grunt) ->
    grunt.initConfig
       babel:
          options:
-            sourceMap: true
+            sourceMap: false
             comments: false
+            plugins: [
+               "transform-es2015-arrow-functions"
+               "transform-es2015-classes"
+               "transform-es2015-destructuring"
+               "transform-es2015-literals"
+               "transform-es2015-object-super"
+               "transform-es2015-parameters"
+               "transform-es2015-typeof-symbol"
+#               "transform-regenerator"
+            ]
          all:
             files: [
                expand: true
