@@ -1,11 +1,11 @@
 {
-  "name": "world3D",
-  "description": "random webgl 3D scenarios",
+  "name": "kosmo",
+  "description": "random webgl 3D scen",
   "main": "app.js",
   "authors": [
     "Nuño de la Serna"
   ],
-  "license": "GNU-3.0",
+  "license": "Apache License 2.0",
   "moduleType": [],
   "homepage": "",
   "private": true,

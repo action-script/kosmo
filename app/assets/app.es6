@@ -24,7 +24,6 @@ app.use(function* (next) {
    yield next;
 });
 
-
 // render with handlebars
 app.use(hbs.middleware( {
    extname: config.template.format,

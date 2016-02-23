@@ -1,7 +1,7 @@
 {
 "server": {
    "port": 3000,
-   "name": "3D world",
+   "name": "project kosmo",
    "path": "app_run"
 },
 "template": {
@@ -11,7 +11,7 @@
    "layoutsPath": "/views/layout"
 },
 "page": {
-   "title": "3D scene | index",
+   "title": "kormo 3D scene | index",
    "description": "webgl scene loader"
 }      
 }      

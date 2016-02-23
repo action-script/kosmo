@@ -1,14 +1,14 @@
 {
-  "name": "world3D",
+  "name": "kosmo",
   "version": "0.0.7",
-  "description": "random webgl 3D scenarios",
+  "description": "random webgl 3D scen",
   "main": "app.js",
   "scripts": {
     "start": "node --harmony app_run/app",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified yet\" && exit 1"
   },
   "author": "Nuño de la Serna",
-  "license": "GNU-3.0",
+  "license": "MIT",
   "devDependencies": {
     "babel-plugin-check-es2015-constants": "^6.5.0",
     "babel-plugin-transform-es2015-arrow-functions": "~6.5.2",
