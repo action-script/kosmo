@@ -1,12 +1,12 @@
 # KOSMO
 
-Project in progres...
+Project in progress...
 
 minimal online WebGL engine and random scene viewer.
 
 
 ### Installation
-You need [Node.js](https://nodejs.org) installed
+You need [Node.js](https://nodejs.org) installed  
 min version 0.11.x
 
 Bower and Grunt should be global:
