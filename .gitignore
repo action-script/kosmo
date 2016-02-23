@@ -3,4 +3,5 @@ app/build
 public/externals
 public/build
 logs
+app_run
 *.swp

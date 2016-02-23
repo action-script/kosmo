@@ -1,26 +1,29 @@
 {
   "name": "world3D",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "random webgl 3D scenarios",
   "main": "app.js",
   "scripts": {
-    "start": "node app/build/app --harmony",
+    "start": "node --harmony app_run/app",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Nuño de la Serna",
   "license": "GNU-3.0",
   "devDependencies": {
-    "grunt": "~0.4.5",
-    "grunt-babel": "~6.0.0",
-    "grunt-eslint": "~18.0.0",
-    "babel-plugin-transform-regenerator": "~6.5.2",
     "babel-plugin-transform-es2015-arrow-functions": "~6.5.2",
     "babel-plugin-transform-es2015-classes": "~6.5.2",
     "babel-plugin-transform-es2015-destructuring": "~6.5.0",
     "babel-plugin-transform-es2015-literals": "~6.5.0",
     "babel-plugin-transform-es2015-object-super": "~6.5.0",
     "babel-plugin-transform-es2015-parameters": "~6.5.0",
-    "babel-plugin-transform-es2015-typeof-symbol": "~6.5.0"
+    "babel-plugin-transform-es2015-typeof-symbol": "~6.5.0",
+    "babel-plugin-transform-regenerator": "~6.5.2",
+    "grunt": "~0.4.5",
+    "grunt-babel": "~6.0.0",
+    "grunt-contrib-clean": "^1.0.0",
+    "grunt-contrib-copy": "^0.8.2",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-eslint": "~18.0.0"
   },
   "dependencies": {
     "koa": "~1.1.2",
