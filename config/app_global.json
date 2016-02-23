@@ -1,0 +1,17 @@
+{
+"server": {
+   "port": 3000,
+   "name": "3D world",
+   "path": "app_run"
+},
+"template": {
+   "format": ".handlebars",
+   "viewPath": "/views",
+   "partialsPath": "/views/partials",
+   "layoutsPath": "/views/layout"
+},
+"page": {
+   "title": "3D scene | index",
+   "description": "webgl scene loader"
+}      
+}      
