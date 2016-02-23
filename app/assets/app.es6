@@ -33,6 +33,9 @@ app.use(hbs.middleware( {
    defaultLayout: 'default'
 }));
 
+// static files
+app.use(require('koa-static')(__base + '/public'));
+
 // route
 app.use(_.get('/', route.index));
 

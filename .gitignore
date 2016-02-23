@@ -1,7 +1,7 @@
 node_modules
 app/build
-public/externals
-public/build
-logs
+client/build
 app_run
+public
+logs
 *.swp

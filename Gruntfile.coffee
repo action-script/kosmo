@@ -31,6 +31,29 @@ module.exports = (grunt) ->
                dest: 'app/build'
                ext: '.js'
             ]
+         client:
+            files: [
+               expand: true
+               cwd: 'client/assets/javascript'
+               src: ['**/*.es6']
+               dest: 'client/build'
+               ext: '.js'
+            ]
+
+      webpack:
+         client:
+            entry: __dirname + "/client/build/main.js"
+            output:
+               path: "public/js/"
+               filename: "main.js"
+            stats:
+               colors: false
+               modules: true
+               reasons: true
+            # stats: false # disables the stats output
+            progress: false
+            watch: false
+            keepalive: false
 
       eslint:
          options:
@@ -41,7 +64,7 @@ module.exports = (grunt) ->
                src: [ "app/assets/**/*.es6" ]
          client:
             files:
-               src: [ "public/assets/scripts/**/*.es6" ]
+               src: [ "client/assets/javascript/**/*.es6" ]
 
       watch:
          app_scripts:
@@ -54,9 +77,15 @@ module.exports = (grunt) ->
               {expand: true, cwd: 'app/build/', src: ['**'], dest: 'app_run/'}
               {expand: true, cwd: 'app/', src: ['views/**'], dest: 'app_run/'}
             ]
+         client_public:
+            files: [
+#              {expand: true, cwd: 'client/build', src: ['**'], dest: 'public/js/'}
+              {expand: true, cwd: 'client/assets/stylesheets', src: ['**'], dest: 'public/style/'}
+            ]
 
       clean:
          app_build: ["app/build", "app_run"]
+         client_build: ["client/build", "public"]
 
 
 
@@ -65,6 +94,19 @@ module.exports = (grunt) ->
    grunt.loadNpmTasks('grunt-contrib-watch')
    grunt.loadNpmTasks('grunt-contrib-copy')
    grunt.loadNpmTasks('grunt-contrib-clean')
+   grunt.loadNpmTasks('grunt-webpack')
 
-   grunt.registerTask("default", ["eslint:app","clean:app_build","babel:app","copy:app_build"])
+
+   grunt.registerTask("default", ["eslint","build_app", "build_client"])
+
+   grunt.registerTask("build_app", [
+      "clean:app_build"
+      "babel:app"
+      "copy:app_build"
+   ])
+   grunt.registerTask("build_client", [
+      "clean:client_build"
+      "babel:client"
+      "webpack:client"
+   ])
 
