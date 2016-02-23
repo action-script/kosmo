@@ -1,6 +1,6 @@
 {
   "name": "world3D",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "random webgl 3D scenarios",
   "main": "app.js",
   "scripts": {
@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "koa": "~1.1.2",
-    "koa-hbs": "~0.8.0"
+    "koa-hbs": "~0.8.0",
+    "koa-route": "^2.4.2"
   }
 }
