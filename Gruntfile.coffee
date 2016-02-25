@@ -70,6 +70,9 @@ module.exports = (grunt) ->
          app_scripts:
             files: ['app/**/*.es6']
             tasks: ['clean:app_build', 'babel:app', 'copy:app_build']
+         client_scripts:
+            files: ['client/assets/javascript/**/*.es6']
+            tasks: ['clean:client_build', 'babel:client', 'webpack:client']
 
       copy:
          app_build:
@@ -85,7 +88,7 @@ module.exports = (grunt) ->
 
       clean:
          app_build: ["app/build", "app_run"]
-         client_build: ["client/build", "public"]
+         client_build: ["client/build", "public/*", "!public/externals"]
 
 
 
