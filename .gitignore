@@ -1,6 +1,7 @@
 node_modules
 app/build
 client/build
+client/externals
 app_run
 public
 logs

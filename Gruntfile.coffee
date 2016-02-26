@@ -41,16 +41,17 @@ module.exports = (grunt) ->
             ]
 
       webpack:
-         client:
+         dev:
             entry: __dirname + "/client/build/main.js"
             output:
                path: "public/js/"
                filename: "main.js"
+            pathinfo: true
+            debug: true
             stats:
                colors: false
                modules: true
                reasons: true
-            # stats: false # disables the stats output
             progress: false
             watch: false
             keepalive: false
@@ -72,7 +73,7 @@ module.exports = (grunt) ->
             tasks: ['clean:app_build', 'babel:app', 'copy:app_build']
          client_scripts:
             files: ['client/assets/javascript/**/*.es6']
-            tasks: ['clean:client_build', 'babel:client', 'webpack:client']
+            tasks: ['clean:client_build', 'babel:client', 'webpack:dev']
 
       copy:
          app_build:
@@ -88,7 +89,7 @@ module.exports = (grunt) ->
 
       clean:
          app_build: ["app/build", "app_run"]
-         client_build: ["client/build", "public/*", "!public/externals"]
+         client_build: ["client/build", "public"]
 
 
 
@@ -110,6 +111,6 @@ module.exports = (grunt) ->
    grunt.registerTask("build_client", [
       "clean:client_build"
       "babel:client"
-      "webpack:client"
+      "webpack:dev"
    ])
 

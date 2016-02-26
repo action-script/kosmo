@@ -1,63 +1,61 @@
+var GLWeb = require('./main.js');
+var gl = GLWeb.gl;
+
 class VBO {
-   constructor(gl) {
-      this.gl = gl;
+   // buffer: name, attrib_size, data
+   constructor() {
       this.buffers = [];
    }
 
+   // remove buffers from memory on graphic card
    destroy() {
       for (let {vbo} of buffers)
-         if (this.gl.isBuffer(vbo))
-            this.gl.deleteBuffer(vbo);
+         if (gl.isBuffer(vbo))
+            gl.deleteBuffer(vbo);
    }
 
    // load individual buffers
    initBuffer(bufferData) {
-      let gl = this.gl;
-      let buffer = this.buffers[id] = bufferData;
+      this.buffers.push(bufferData);
+      let buffer = this.buffers.slice(-1)[0];
 
       buffer.vbo = gl.createBuffer()
-      this.bind(buffer.vbo);
+      gl.bindBuffer(gl.ARRAY_BUFFER, buffer.vbo);
       gl.bufferData(
          gl.ARRAY_BUFFER,                 // target
          new Float32Array(buffer.data),   // data
          gl.STATIC_DRAW                   // usage
       );
-      this.bind(null); // clean up
+      gl.bindBuffer(gl.ARRAY_BUFFER, null); // clean up
    }
 
-   // bind or unbind
-   bind(vbo = null) {
-      this.gl.bindBuffer(this.gl.ARRAY_BUFFER, vbo);
-   }
-   
-   setUpAttribPointer(buffer_id){
-      let gl = this.gl;
-      let {attr_pointer_id, attr_pointer_size} = this.buffers[buffer_id];
-
-      gl.enableVertexAttribArray(attr_pointer_id);
+   // bind buffer
+   setUpAttribPointer() {
+      var attrib_location = GLWeb.Shader.current.getAttribLocation(buffer.name);
+      gl.bindBuffer(gl.ARRAY_BUFFER, buffer,vbo);
+      gl.enableVertexAttribArray(attrib_location);
       gl.vertexAttribPointer(
-         attr_pointer_id,     // shader attribute pointer
-         attr_pointer_size,   // size, number of elements
-         gl.FLOAT             // type of elements
+         attrib_location,     // shader attribute pointer
+         buffer.attrib_size,  // size, number of elements
+         gl.FLOAT,            // type of elements
          false,               // normalized
          0,                   // stride, data between each position
          0                    // pointer, ffset of first element
       );
    }
 
-   draw(type = this.gl.TRIANGLES) {
-      for (let {id,vbo} of buffers) {
-         this.bind(vbo);
-         this.setUpAttribPointer(id);
+   bind() {
+      for (let buffer of this.buffers) {
+         this.setUpAttribPointer(buffer);
       }
+   }
 
-      this.gl.drawArrays(
-         type,
-         0,
-         this.buffers[0].data.length/this.buffers[0].attr_pointer_size
-      );
-
-      this.bind(null);      
+   unbind() {
+      gl.bindBuffer(gl.ARRAY_BUFFER, null);
+   }
+  
+   draw(mode = gl.TRIANGLES, count) {
+      gl.drawArrays(mode, 0, count);
    }
 }
 
