@@ -5,6 +5,8 @@ class Mesh {
       this.vbo = new VBO();
       for ( let buffer of mesh.buffers )
          this.vbo.initBuffer(buffer);
+      if (mesh.indices != undefined && mesh.indices.length > 0)
+         this.vbo.initIndexBuffer(mesh.indices);
    }
 
    remove() {

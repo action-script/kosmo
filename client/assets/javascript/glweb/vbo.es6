@@ -5,6 +5,7 @@ class VBO {
    // buffer: name, attrib_size, data
    constructor() {
       this.buffers = [];
+      this.isElementMesh = false;
    }
 
    // remove buffers from memory on graphic card
@@ -29,6 +30,20 @@ class VBO {
       gl.bindBuffer(gl.ARRAY_BUFFER, null); // clean up
    }
 
+   // load array of elements
+   initIndexBuffer(indices) {
+      this.isElementMesh = true;
+      this.indicesSize = indices.length;
+      this.ibo = gl.createBuffer();
+      gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.ibo);
+      gl.bindBuffer(
+         gl.ELEMENT_ARRAY_BUFFER,
+         new Uint16Array(indices),
+         gl.STATIC_DRAW
+      );
+      gl.bindBuffer(gl.ARRAY_BUFFER, null); // clean up
+   }
+
    // bind buffer
    setUpAttribPointer() {
       var attrib_location = GLWeb.Shader.current.getAttribLocation(buffer.name);
@@ -48,14 +63,21 @@ class VBO {
       for (let buffer of this.buffers) {
          this.setUpAttribPointer(buffer);
       }
+      if (this.isElementMesh)
+         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.ibo);
    }
 
    unbind() {
       gl.bindBuffer(gl.ARRAY_BUFFER, null);
+      if (this.isElementMesh)
+         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null)
    }
   
    draw(mode = gl.TRIANGLES, count) {
-      gl.drawArrays(mode, 0, count);
+      if (this.isElementMesh)
+         gl.drawElements(type, this.indicesSize, gl.UNSIGNED_SHORT, 0)
+      else
+         gl.drawArrays(mode, 0, count);
    }
 }
 
