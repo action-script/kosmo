@@ -27,7 +27,7 @@ var shader= [
 new Shader(shader.join('\n'));
 new Mesh(mesh);
 
-var objLoad = new Loader('/api/obj/test');
+var objLoad = new Loader('/api/item/test');
 objLoad.load( obj => {
    console.log('getting obj', obj);
 }); 

@@ -5,5 +5,7 @@ client/externals
 app_run
 public
 logs
-store
+!store/
+store/*
+!store/items
 *.swp
