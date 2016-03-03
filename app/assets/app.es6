@@ -6,12 +6,11 @@
 
 var koa = require('koa');
 var hbs = require('koa-hbs');
-var _ = require('koa-route');
-var route = require('./route');
-var path = require('path')
+var router = require('koa-router')();
+var controllers = require('./controllers');
+var path = require('path');
  
 var app = koa();
-
 
 // configuration
 // TODO: find a better solution for root path
@@ -36,7 +35,10 @@ app.use(hbs.middleware( {
 // static files
 app.use(require('koa-static')(__base + '/public'));
 
-// route
-app.use(_.get('/', route.index));
+// page routes
+router.get('/', controllers.index)
+
+app.use(router.routes());
+app.use(controllers.api.routes());
 
 app.listen(config.server.port);

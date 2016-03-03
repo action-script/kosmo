@@ -1,7 +1,7 @@
 var GLWeb = require('./glweb/main.js').init('app');
 var Mesh = require('./glweb/mesh.js');
 var Shader = require('./glweb/shader.js');
-
+var Loader = require('./loaders/obj.js');
 /* mock data */
 var mesh = {
    buffers: [
@@ -26,3 +26,8 @@ var shader= [
 
 new Shader(shader.join('\n'));
 new Mesh(mesh);
+
+var objLoad = new Loader('/api/obj/test');
+objLoad.load( obj => {
+   console.log('getting obj', obj);
+}); 

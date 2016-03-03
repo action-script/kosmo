@@ -1,6 +1,6 @@
 {
   "name": "kosmo",
-  "version": "0.0.9",
+  "version": "0.1.0",
   "description": "random webgl 3D scen",
   "main": "app.js",
   "scripts": {
@@ -39,7 +39,9 @@
   "dependencies": {
     "koa": "~1.1.2",
     "koa-hbs": "~0.8.0",
+    "koa-json-body": "^4.0.0",
     "koa-router": "~5.4.0",
-    "koa-static": "^2.0.0"
+    "koa-static": "^2.0.0",
+    "nedb": "^1.8.0"
   }
 }
