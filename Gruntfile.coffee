@@ -73,7 +73,7 @@ module.exports = (grunt) ->
             tasks: ['clean:app_build', 'babel:app', 'copy:app_build']
          client_scripts:
             files: ['client/assets/javascript/**/*.es6']
-            tasks: ['clean:client_build', 'babel:client', 'webpack:dev']
+            tasks: ['clean:client_build', 'babel:client', 'webpack:dev', "copy:client_public"]
 
       copy:
          app_build:
@@ -111,6 +111,7 @@ module.exports = (grunt) ->
    grunt.registerTask("build_client", [
       "clean:client_build"
       "babel:client"
+      "copy:client_public"
       "webpack:dev"
    ])
 
