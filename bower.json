@@ -17,6 +17,7 @@
     "tests"
   ],
   "dependencies": {
-    "jquery": "~2.2.1"
+    "jquery": "~2.2.1",
+    "gl-matrix": "~2.3.2"
   }
 }
