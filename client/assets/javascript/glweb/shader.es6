@@ -124,10 +124,12 @@ class Shader {
    }
 
    unbind() {
+      Shader.current = null;
       gl.useProgram(null);
    }
 
    bind() {
+      Shader.current = this;
       gl.useProgram(this.program);
    }
 }

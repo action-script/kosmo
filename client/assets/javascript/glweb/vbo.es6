@@ -1,4 +1,5 @@
 var GLWeb = require('./main.js');
+var Shader = require('./shader.js');
 var gl = GLWeb.gl;
 
 class VBO {
@@ -36,7 +37,7 @@ class VBO {
       this.indicesSize = indices.length;
       this.ibo = gl.createBuffer();
       gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.ibo);
-      gl.bindBuffer(
+      gl.bufferData(
          gl.ELEMENT_ARRAY_BUFFER,
          new Uint16Array(indices),
          gl.STATIC_DRAW
@@ -45,9 +46,11 @@ class VBO {
    }
 
    // bind buffer
-   setUpAttribPointer() {
-      var attrib_location = GLWeb.Shader.current.getAttribLocation(buffer.name);
-      gl.bindBuffer(gl.ARRAY_BUFFER, buffer,vbo);
+   setUpAttribPointer(buffer) {
+      var attrib_location = Shader.current.getAttribLocation(buffer.name);
+      if (attrib_location < 0)
+         throw ('Error locating attibute ' + buffer.name); 
+      gl.bindBuffer(gl.ARRAY_BUFFER, buffer.vbo);
       gl.enableVertexAttribArray(attrib_location);
       gl.vertexAttribPointer(
          attrib_location,     // shader attribute pointer
@@ -73,11 +76,11 @@ class VBO {
          gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null)
    }
   
-   draw(mode = gl.TRIANGLES, count) {
+   draw(mode = gl.TRIANGLES) {
       if (this.isElementMesh)
-         gl.drawElements(type, this.indicesSize, gl.UNSIGNED_SHORT, 0)
+         gl.drawElements(mode, this.indicesSize, gl.UNSIGNED_SHORT, 0)
       else
-         gl.drawArrays(mode, 0, count);
+         gl.drawArrays(mode, 0, this.data.length / this.attrib_size);
    }
 }
 
