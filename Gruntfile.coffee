@@ -70,10 +70,10 @@ module.exports = (grunt) ->
       watch:
          app_scripts:
             files: ['app/**/*.es6']
-            tasks: ['clean:app_build', 'babel:app', 'copy:app_build']
+            tasks: ['build_app']
          client_scripts:
             files: ['client/assets/javascript/**/*.es6']
-            tasks: ['clean:client_build', 'babel:client', 'webpack:dev', "copy:client_public"]
+            tasks: ['build_client']
 
       copy:
          app_build:
