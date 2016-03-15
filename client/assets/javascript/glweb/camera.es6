@@ -1,4 +1,4 @@
-require('../../externals/gl-matrix/dist/gl-matrix-min.js');
+const glMatrix = require('../../externals/gl-matrix/dist/gl-matrix-min.js');
 
 class Camera {
    constructor(params) {
@@ -13,12 +13,12 @@ class Camera {
       };
       Object.assign(this, settings, params);
 
-      this.viewMatrix = mat4.create();
-      this.projectionMatrix = mat4.create();
+      this.viewMatrix = glMatrix.mat4.create();
+      this.projectionMatrix = glMatrix.mat4.create();
    }
 
-   getProjection() {
-      return mat4.prespective(
+   getProjectionMatrix() {
+      return glMatrix.mat4.perspective(
          this.projectionMatrix,
          Math.radians(this.fov),
          this.aspect_ratio,
@@ -28,7 +28,7 @@ class Camera {
    }
 
    getViewMatrix() {
-      return mat4.lookAt(
+      return glMatrix.mat4.lookAt(
          this.viewMatrix,
          this.position,
          this.center,

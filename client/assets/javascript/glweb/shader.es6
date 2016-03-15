@@ -103,14 +103,11 @@ class Shader {
 
    uniform(name, value) {
       var uniform_location = this.getUniformLocation(name);
-      if (value.type == 'Mat4') {
+      if (value.type == 'mat4') {
          gl.uniformMatrix4fv(uniform_location, false, value.data);
       }
-      else if (value.type == 'Mat3') {
+      else if (value.type == 'mat3') {
          gl.uniformMatrix3fv(uniform_location, false, value.data);
-      }
-      else if (value.type == 'Vec3') {
-         gl.uniform3f(uniform_location, value.x, value.y, value.z);
       }
       else if (typeof(value) == 'number') {
          if (isInt(value))

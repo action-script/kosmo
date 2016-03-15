@@ -1,20 +1,47 @@
 var GLWeb = require('./main.js');
+var Mesh = require('./mesh.js');
 var Shader = require('./shader.js');
 var FBO = require('./fbo.js');
 var gl = GLWeb.gl;
+
+var full_screen = new Mesh({
+   buffers: [
+      {
+         name: 'vertices',
+         attrib_size: 3, 
+         data: [
+         1, 1, 0,    -1,  1, 0,   -1, -1, 0,
+         1, 1, 0,    -1, -1, 0,    1, -1, 0
+         ]
+      },
+      {
+         name: 'textures',
+         attrib_size: 2,
+         data: [
+         1, 1,    0, 1,    0, 0,
+         1, 1,    0, 0,    1, 0
+         ]
+      }
+   ]
+});
 
 class Render {
    constructor(params) {
       Object.assign(this, params);
 
       if (params.result_target) {
-         this.fbo = new FBO();
-         // depth & stencil;         
+         this.fbo = params.fbo ? params.fbo : new FBO();
+         this.fbo.attachColor(params.result_target);
+         // depth and stencil
+         this.fbo.checkFboSatus();
       }
    }
 
    render() {
       this.shader.bind();
+
+      if (this.uniforms)
+         this.passUniform();
   
       if(this.result_target)
          gl.viewport(0, 0, this.result_target.width, this.result_target.height);
@@ -26,13 +53,20 @@ class Render {
 
       Render.clear(this.clear_options);
 
-      this.draw();
+      (this.draw || full_screen.draw)();
   
       this.shader.unbind();
   
       if (this.fbo)
          this.fbo.stop();
    }
+
+   passUniform() {
+      // TODO: split uniform into type. Not type check = faster
+      for (let name in this.uniforms) {
+         this.shader.uniform(name, this.uniforms[name]);
+      }
+   }   
 
    static clear(options = null) {
       var flags;

@@ -8,7 +8,12 @@ class Scene {
       // TODO: render all processor (normals, difuse) 
       this.scene_render = new Render({
          shader: params.shader,
-         draw: () => { this.scene.draw(); }
+         draw: () => { this.scene.draw(); },
+         uniforms: {
+            projection: {type: 'mat4', data: params.camera.getProjectionMatrix()},
+            view: {type: 'mat4', data: params.camera.getViewMatrix()},
+            color: [0.3, 0.8, 0.7]
+         }
       });
    }
 

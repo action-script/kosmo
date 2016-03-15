@@ -20,6 +20,7 @@ var api = new Router({
 
 
 api.post('/item/save', jsonBody, function *() {
+   console.log(`saving item ${JSON.stringify(this.request.body)}`);
    if (this.request.body != '')
       yield new Promise((resolve, reject) => {
          db.items.insert(this.request.body, (err, newDoc) => {
@@ -42,7 +43,7 @@ api.post('/item/save', jsonBody, function *() {
 
 
 api.get('/item/:id', function * () {
-   console.log(`get item ${this.params.id}`);
+   console.log(`geting item ${this.params.id}`);
    yield new Promise((resolve, reject) => {
       db.items.findOne({ _id: this.params.id }, (err, doc) => {
          if (err != null) {
@@ -54,6 +55,7 @@ api.get('/item/:id', function * () {
             this.body = 'item not found';
          }
          else {
+            console.log(`item found ${this.params.id}`);
             this.status = 200;
             this.body = doc;
          }
