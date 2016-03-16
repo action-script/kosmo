@@ -7,6 +7,12 @@ class FBO {
    }
 
    checkFboSatus() {
+      if (!gl.isFramebuffer(this.fbo)) {
+         throw 'Error. fbo is not frame';
+         return;
+      }
+
+      this.bind();
       switch (gl.checkFramebufferStatus(gl.FRAMEBUFFER)) {
          case gl.FRAMEBUFFER_COMPLETE:
             //console.log('framebuffer complete');
@@ -26,6 +32,7 @@ class FBO {
          default:
             throw 'Error: not a valuated error';
       }
+      this.unbind();
    }
 
    bind() {
@@ -41,8 +48,8 @@ class FBO {
       gl.framebufferTexture2D(
          gl.FRAMEBUFFER,         // target
          gl.COLOR_ATTACHMENT0,   // attachment pointer
-         texture.target,
-         texture.id,
+         texture.target,         // texture target
+         texture.texture,        // texture id
          0                       // mipmap level of the texture to be attached
       );
       this.unbind();
@@ -51,12 +58,13 @@ class FBO {
    attachDepth(buffer = null) {
       this.bind();
       gl.framebufferRenderbuffer(
-         gl.FRAMEBUFFER,
-         gl.DEPTH_ATTACHMENT,
-         gl.RENDERBUFFER,
-         buffer ? buffer.id : null
+         gl.FRAMEBUFFER,               // target
+         gl.DEPTH_ATTACHMENT,          // attachment pointer
+         gl.RENDERBUFFER,              // renderbuffer target
+         buffer.buffer ? buffer.buffer : null  // renderbuffer id
       );
+      this.unbind();
    }
 }
 
-
+module.exports = FBO;
