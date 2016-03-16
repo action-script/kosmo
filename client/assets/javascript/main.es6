@@ -79,10 +79,14 @@ objLoad.load( obj => {
       }
    });
 
-   // color scene render
-   test_scene.render();
+   GLWeb.mainLoop((time, current) => {
+         
+      // color scene render
+      test_scene.render();
+         
+      // on screen fx pass
+      screen_render.render();
 
-   // on screen fx pass
-   screen_render.render();
+   }, true);
   
 });
