@@ -31,7 +31,9 @@ class Render {
 
       if (params.result_target) {
          this.fbo = params.fbo ? params.fbo : new FBO();
-         this.fbo.attachColor(params.result_target);
+         this.fbo.attachColor(params.result_target.color);
+         if (params.result_target.depth);
+            this.fbo.attachDepth(params.result_target.depth);
          // depth and stencil
          this.fbo.checkFboSatus();
       }
@@ -40,25 +42,40 @@ class Render {
    render() {
       this.shader.bind();
 
+      if (this.samplers)
+         this.passSampler()
+
       if (this.uniforms)
          this.passUniform();
   
       if(this.result_target)
-         gl.viewport(0, 0, this.result_target.width, this.result_target.height);
+         gl.viewport(0, 0, this.result_target.color.width, this.result_target.color.height);
       else
          gl.viewport(0, 0, GLWeb.canvas.width, GLWeb.canvas.height);
       
       if (this.fbo)
-         this.fbo.use();
+         this.fbo.bind();
 
       Render.clear(this.clear_options);
 
-      (this.draw || full_screen.draw)();
+      if (this.draw)
+         this.draw();
+      else
+         full_screen.draw();
   
       this.shader.unbind();
   
       if (this.fbo)
-         this.fbo.stop();
+         this.fbo.unbind();
+   }
+
+   passSampler(){
+      let i = 0;
+      for (let name in this.samplers) {
+         this.shader.texture(name, i);
+         this.samplers[name].bind(i);
+         ++i;
+      }
    }
 
    passUniform() {

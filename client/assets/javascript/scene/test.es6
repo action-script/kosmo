@@ -5,9 +5,10 @@ var gl = GLWeb.gl;
 class Scene {
    init(params) {
       this.scene = this.unpackScene(params.object);
-      // TODO: render all processor (normals, difuse) 
+      // TODO: render all processor (normals, difuse)
       this.scene_render = new Render({
          shader: params.shader,
+         result_target: params.result_target,
          draw: () => { this.scene.draw(); },
          uniforms: {
             projection: {type: 'mat4', data: params.camera.getProjectionMatrix()},

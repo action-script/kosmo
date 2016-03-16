@@ -4,6 +4,8 @@ var Loader = require('./loaders/obj.js');
 var Mesh = require('./glweb/mesh.js');
 var Shader = require('./glweb/shader.js');
 var Texture = require('./glweb/texture.js');
+var RenderBuffer = require('./glweb/renderbuffer.js');
+var Render = require('./glweb/render.js');
 var Camera = require('./glweb/camera.js');
 var test_scene = require('./scene/test.js');
 
@@ -22,14 +24,14 @@ var shader= [
 '}'
 ];
 
-/*
+
 var pass_shader = [
 'vertex:',
 'attribute vec3 vertices;',
 'attribute vec2 textures;',
 'varying vec2 vtexcoord;',
 'void main(void) {',
-'  gl_Position = vec4(vertices, 1.0);,
+'  gl_Position = vec4(vertices, 1.0);',
 '  vtexcoord = textures;',
 '}',
 'fragment:',
@@ -37,17 +39,28 @@ var pass_shader = [
 'uniform sampler2D source;',
 'void main(void) {',
 '  vec4 src = texture2D(source, vtexcoord);',
+//'  src.r = 1.0;',
 '  gl_FragColor = vec4(src.rgb, 1.0);',
 '}'
 ];
-*/
+
 
 var test_shader = new Shader(shader.join('\n'));
-//var test_pass_shader = new Shader(pass_shader.join('\n'));
+var test_pass_shader = new Shader(pass_shader.join('\n'));
 
 var camera = new Camera({
    aspect_ratio: GLWeb.canvas.width / GLWeb.canvas.height,
    position: [0, 0.5, 2]
+});
+
+var color_result = new Texture();
+var depth_result = new RenderBuffer(RenderBuffer.DEPTH);
+
+var screen_render = new Render({
+   shader: test_pass_shader,
+   samplers: {
+      source: color_result
+   }
 });
 
 var objLoad = new Loader('/api/item/test');
@@ -59,8 +72,17 @@ objLoad.load( obj => {
    test_scene.init({
       camera: camera,
       shader: test_shader,
-      object: mesh
+      object: mesh,
+      result_target: {
+         color: color_result,
+         depth: depth_result
+      }
    });
 
+   // color scene render
    test_scene.render();
-}); 
+
+   // on screen fx pass
+   screen_render.render();
+  
+});

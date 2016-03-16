@@ -29,12 +29,15 @@ class VBO {
          gl.STATIC_DRAW                   // usage
       );
       gl.bindBuffer(gl.ARRAY_BUFFER, null); // clean up
+
+      if (this.buffers.length == 1)
+         this.vertices_size = buffer.data.length / buffer.attrib_size;
    }
 
    // load array of elements
    initIndexBuffer(indices) {
       this.isElementMesh = true;
-      this.indicesSize = indices.length;
+      this.indices_size = indices.length;
       this.ibo = gl.createBuffer();
       gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.ibo);
       gl.bufferData(
@@ -78,9 +81,9 @@ class VBO {
   
    draw(mode = gl.TRIANGLES) {
       if (this.isElementMesh)
-         gl.drawElements(mode, this.indicesSize, gl.UNSIGNED_SHORT, 0)
+         gl.drawElements(mode, this.indices_size, gl.UNSIGNED_SHORT, 0)
       else
-         gl.drawArrays(mode, 0, this.data.length / this.attrib_size);
+         gl.drawArrays(mode, 0, this.vertices_size);
    }
 }
 

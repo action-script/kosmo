@@ -120,6 +120,12 @@ class Shader {
       }
    }
 
+   texture(name, id = 0) {
+      var uniform_location = this.getUniformLocation(name);
+      if (uniform_location)
+         gl.uniform1i(uniform_location, id);
+   }
+
    unbind() {
       Shader.current = null;
       gl.useProgram(null);
