@@ -1,5 +1,5 @@
 var GLWeb = require('../glweb/main.js');
-var Render = require('../glweb/render.js');
+const Render = require('../glweb/render.js');
 var gl = GLWeb.gl;
 
 class Scene {
@@ -11,8 +11,8 @@ class Scene {
          result_target: params.result_target,
          draw: () => { this.scene.draw(); },
          uniforms: {
-            projection: {type: 'mat4', data: params.camera.getProjectionMatrix()},
-            view: {type: 'mat4', data: params.camera.getViewMatrix()},
+            projection: {type: 'mat4', data: params.camera.projectionMatrix},
+            view: {type: 'mat4', data: params.camera.viewMatrix},
             color: [0.3, 0.8, 0.7]
          }
       });

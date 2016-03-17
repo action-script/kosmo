@@ -1,12 +1,12 @@
 var GLWeb = require('./glweb/main.js').init('app');
-var Helper = require('./helper.js');
-var Loader = require('./loaders/obj.js');
-var Mesh = require('./glweb/mesh.js');
-var Shader = require('./glweb/shader.js');
-var Texture = require('./glweb/texture.js');
-var RenderBuffer = require('./glweb/renderbuffer.js');
-var Render = require('./glweb/render.js');
-var Camera = require('./glweb/camera.js');
+const Helper = require('./helper.js');
+const Loader = require('./loaders/obj.js');
+const Mesh = require('./glweb/mesh.js');
+const Shader = require('./glweb/shader.js');
+const Texture = require('./glweb/texture.js');
+const RenderBuffer = require('./glweb/renderbuffer.js');
+const Render = require('./glweb/render.js');
+const Camera = require('./cameraController.js');
 var test_scene = require('./scene/test.js');
 
 /* mock data */
@@ -39,7 +39,6 @@ var pass_shader = [
 'uniform sampler2D source;',
 'void main(void) {',
 '  vec4 src = texture2D(source, vtexcoord);',
-//'  src.r = 1.0;',
 '  gl_FragColor = vec4(src.rgb, 1.0);',
 '}'
 ];
@@ -50,7 +49,7 @@ var test_pass_shader = new Shader(pass_shader.join('\n'));
 
 var camera = new Camera({
    aspect_ratio: GLWeb.canvas.width / GLWeb.canvas.height,
-   position: [0, 0.5, 2]
+   position: [0, 0, 5]
 });
 
 var color_result = new Texture();
@@ -80,6 +79,7 @@ objLoad.load( obj => {
    });
 
    GLWeb.mainLoop((time, current) => {
+      camera.calculateView();
          
       // color scene render
       test_scene.render();
