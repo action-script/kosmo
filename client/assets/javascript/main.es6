@@ -14,13 +14,17 @@ var shader= [
 'vertex:',
 'attribute vec3 vertices;',
 'uniform mat4 projection, view;',
+'varying vec4 pos;',
 'void main(void) {',
+'  pos = projection * view * vec4(vertices, 1.0);',
 '  gl_Position = projection * view * vec4(vertices, 1.0);',
 '}',
 'fragment:',
 'uniform vec3 color;',
+'varying vec4 pos;',
 'void main() {',
-'  gl_FragColor = vec4(color, 1.0);',
+'  vec3 pixel = color.xyz / pos.z/2.;',
+'  gl_FragColor = vec4(pixel, 1.0);',
 '}'
 ];
 
@@ -83,7 +87,7 @@ objLoad.load( obj => {
          
       // color scene render
       test_scene.render();
-         
+        
       // on screen fx pass
       screen_render.render();
 

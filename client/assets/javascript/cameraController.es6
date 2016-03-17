@@ -11,7 +11,7 @@ class CameraController extends Camera {
       this.radius = Math.abs( glMatrix.vec3.dist(this.center, this.position) );
       this.rotation_offset = glMatrix.vec3.create();
 
-      this.move_speed = 0.01;
+      this.move_speed = 0.1;
 
       this.events = {
          'this.el#mousedown': 'click',
@@ -75,12 +75,15 @@ class CameraController extends Camera {
          var centred = glMatrix.vec3.sub([], this.center, this.position);
          var centred_unity = glMatrix.vec3.normalize([], centred);
          var movement_position = centred_unity;
+
          if (this.keys.s)
             movement_position = glMatrix.vec3.scale([], centred_unity, -1);
          if (this.keys.d)
             movement_position = glMatrix.vec3.cross([],centred_unity,[0,1,0]);
          if (this.keys.a)
             movement_position = glMatrix.vec3.cross([],centred_unity,[0,-1,0]);
+         glMatrix.vec3.scale(movement_position,movement_position,this.move_speed);
+
          glMatrix.vec3.add(this.position, this.position, movement_position);
          glMatrix.vec3.add(this.center, this.center, movement_position);
       }

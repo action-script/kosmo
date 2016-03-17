@@ -52,7 +52,12 @@ class Render {
          gl.viewport(0, 0, this.result_target.color.width, this.result_target.color.height);
       else
          gl.viewport(0, 0, GLWeb.canvas.width, GLWeb.canvas.height);
-      
+
+      if (this.depth)
+         gl.enable(gl.DEPTH_TEST);
+      else 
+         gl.disable(gl.DEPTH_TEST);
+
       if (this.fbo)
          this.fbo.bind();
 
@@ -89,8 +94,8 @@ class Render {
       var flags;
       if (options == null) {
          gl.clearColor(0,0,0,1);
-         gl.clearDepth(0);
-         gl.clearStencil(0);
+         gl.clearDepth(1.0);
+         //gl.clearStencil(0);
          flags = gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT | gl.STENCIL_BUFFER_BIT;
       }
       else {

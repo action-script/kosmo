@@ -9,6 +9,7 @@ class Scene {
       this.scene_render = new Render({
          shader: params.shader,
          result_target: params.result_target,
+         depth: true,
          draw: () => { this.scene.draw(); },
          uniforms: {
             projection: {type: 'mat4', data: params.camera.projectionMatrix},
@@ -16,6 +17,8 @@ class Scene {
             color: [0.3, 0.8, 0.7]
          }
       });
+
+      gl.enable(gl.CULL_FACE);
    }
 
    unpackScene(scene) {
