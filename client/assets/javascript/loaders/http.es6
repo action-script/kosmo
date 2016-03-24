@@ -1,9 +1,21 @@
 const Loader = require('./main.js');
+const $ = require('../../externals/jquery/dist/jquery.js');
 
 class HTTPLoader {
    // TODO: extends cache
    constructor(src) {
       this.src = src;
+   }
+
+   loadPromise() {
+      var deferred = $.Deferred();
+      this.load( (source) => {
+         deferred.resolve(source);
+      }, (error) => {
+         throw error;
+         deferred.fail(error);
+      });
+      return deferred.promise();
    }
 
    load(onLoad, onError) {

@@ -5,26 +5,30 @@ class LoadManager {
    }
 
    addLoad(load) {
-      load.percent = 0;
+      load.percentage = 0;
       load.request.addEventListener('progress', event => {
          if ( event.lengthComputable ) {
             load.percentage = event.loaded / event.total * 100;
          }
       }, false );
-      this.loaders.push(request);
+      this.loaders.push(load);
    }
 
    getLoadPercent() {
       var total = 0;
-      for (let load in this.loaders) {
+      for (let load of this.loaders) {
          total += load.percentage;
       }
 
-      total /= this.loaders.length();
-      if (total == 100)
-         this.loaders = [];
-      return total;
+      if (this.loaders.length != 0) {
+         total /= this.loaders.length;
+         if (total == 100)
+            this.loaders = [];
+         return total;
+      }
+      else
+         return 100;
    }
 }
 
-module.export = new LoadManager();
+module.exports = new LoadManager();
