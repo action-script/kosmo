@@ -12,6 +12,8 @@ class Mesh {
 
       if (mesh.indices != undefined && mesh.indices.length > 0)
          this.vbo.initIndexBuffer(mesh.indices);
+
+      this.id = mesh.id;
    }
 
    remove() {
@@ -41,6 +43,8 @@ class Mesh {
 
       if (mesh.indices != undefined && mesh.indices.length > 0)
          result.indices = mesh.indices;
+
+      result.id = mesh['_id'];
 
       return result;
    }
