@@ -22,6 +22,7 @@ class Graph {
             depth: depth_result
          },
          depth: true,
+         cull: gl.BACK,
          draw: () => { this.scene.draw(); },
          uniforms: {
             projection: {type: 'mat4', data: this.scene.camera.projectionMatrix},
@@ -32,6 +33,7 @@ class Graph {
 
       this.screen_render = new Render({
          shader: Shader.screen_pass,
+         cull: gl.BACK,
          samplers: {
             source: color_result
          }

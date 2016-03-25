@@ -9,17 +9,17 @@ const SceneManager = require('./scene/main.js');
 var shader= [
 'vertex:',
 'attribute vec3 vertices;',
-'uniform mat4 projection, view;',
+'uniform mat4 projection, view, model;',
 'varying vec4 pos;',
 'void main(void) {',
-'  pos = projection * view * vec4(vertices, 1.0);',
-'  gl_Position = projection * view * vec4(vertices, 1.0);',
+'  pos = projection * view * model * vec4(vertices, 1.0);',
+'  gl_Position = projection * view * model * vec4(vertices, 1.0);',
 '}',
 'fragment:',
 'uniform vec3 color;',
 'varying vec4 pos;',
 'void main() {',
-'  vec3 pixel = color.xyz / pos.z/2.;',
+'  vec3 pixel = color.xyz / (pos.z/2.5);',
 '  gl_FragColor = vec4(pixel, 1.0);',
 '}'
 ];

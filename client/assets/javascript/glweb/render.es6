@@ -57,6 +57,13 @@ class Render {
       else 
          gl.disable(gl.DEPTH_TEST);
 
+      if (this.cull) {
+         gl.enable(gl.CULL_FACE);
+         gl.cullFace(this.cull);
+      }
+      else
+         gl.disable(gl.CULL_FACE);
+
       if (this.fbo)
          this.fbo.bind();
 
