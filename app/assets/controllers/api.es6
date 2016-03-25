@@ -8,7 +8,7 @@ var Datastore = require('nedb');
 
 var db = {}; 
 db.items = new Datastore({ filename: 'store/items'});
-//db.scene = new Datastore({ filename: 'store/scene'});
+db.scenes = new Datastore({ filename: 'store/scenes'});
 //db.chains = new Datastore({ filename: 'store/chains'});
 for (let key in db)
    db[key].loadDatabase();
@@ -18,7 +18,30 @@ var api = new Router({
   prefix: '/api'
 });
 
+api.get('/scene/:id', function * () {
+   console.log(`getting scene ${this.params.id}`);
 
+   yield new Promise((resolve, reject) => {
+      db.scenes.findOne({ _id: this.params.id }, (err, doc) => {
+         if (err != null) {
+            this.status = 500;
+            this.body = `Error searching scene\n ${error}`;
+         }
+         if (doc === null) {
+            this.status = 404;
+            this.body = 'scene not found';
+         }
+         else {
+            console.log(`scene found ${this.params.id}`);
+            this.status = 200;
+            this.body = doc;
+         }
+         resolve();
+      });
+   });
+
+});
+/*
 api.post('/item/save', jsonBody, function *() {
    console.log(`saving item ${JSON.stringify(this.request.body)}`);
    if (this.request.body != '')
@@ -40,10 +63,10 @@ api.post('/item/save', jsonBody, function *() {
       this.body = 'no item data';
    }
 });
-
+*/
 
 api.get('/item/:id', function * () {
-   console.log(`geting item ${this.params.id}`);
+   console.log(`getiting item ${this.params.id}`);
    yield new Promise((resolve, reject) => {
       db.items.findOne({ _id: this.params.id }, (err, doc) => {
          if (err != null) {
