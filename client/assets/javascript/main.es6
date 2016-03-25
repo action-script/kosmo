@@ -1,13 +1,9 @@
 var GLWeb = require('./glweb/main.js').init('app');
+const $ = require('../externals/jquery/dist/jquery.js');
 const Helper = require('./helper.js');
-const Loader = require('./loaders/obj.js');
-const Mesh = require('./glweb/mesh.js');
 const Shader = require('./glweb/shader.js');
-const Texture = require('./glweb/texture.js');
-const RenderBuffer = require('./glweb/renderbuffer.js');
-const Render = require('./glweb/render.js');
 const Camera = require('./cameraController.js');
-var test_scene = require('./scene/test.js');
+const SceneManager = require('./scene/main.js');
 
 /* mock data */
 var shader= [
@@ -48,49 +44,21 @@ var pass_shader = [
 ];
 
 
-var test_shader = new Shader(shader.join('\n'));
-var test_pass_shader = new Shader(pass_shader.join('\n'));
+Shader.basic = new Shader(shader.join('\n'));
+Shader.screen_pass = new Shader(pass_shader.join('\n'));
 
 var camera = new Camera({
    aspect_ratio: GLWeb.canvas.width / GLWeb.canvas.height,
    position: [0, 0, 5]
 });
 
-var color_result = new Texture();
-var depth_result = new RenderBuffer(RenderBuffer.DEPTH);
+// Scene manager
+var scene = new SceneManager(camera);
+scene.createScene('test');
 
-var screen_render = new Render({
-   shader: test_pass_shader,
-   samplers: {
-      source: color_result
-   }
-});
+GLWeb.mainLoop((time, current) => {
+   camera.calculateView();
+      
+   scene.render(time, current);
+}, true);
 
-var objLoad = new Loader('/api/item/test');
-objLoad.load( obj => {
-   console.log('getting obj', obj);
-
-   var mesh = new Mesh(obj);
-
-   test_scene.init({
-      camera: camera,
-      shader: test_shader,
-      object: mesh,
-      result_target: {
-         color: color_result,
-         depth: depth_result
-      }
-   });
-
-   GLWeb.mainLoop((time, current) => {
-      camera.calculateView();
-         
-      // color scene render
-      test_scene.render();
-        
-      // on screen fx pass
-      screen_render.render();
-
-   }, true);
-  
-});

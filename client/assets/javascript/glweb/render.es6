@@ -1,6 +1,5 @@
 var GLWeb = require('./main.js');
 var Mesh = require('./mesh.js');
-var Shader = require('./shader.js');
 var FBO = require('./fbo.js');
 var gl = GLWeb.gl;
 

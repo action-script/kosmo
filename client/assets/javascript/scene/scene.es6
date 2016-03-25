@@ -8,7 +8,6 @@ class Scene {
    constructor(id) {
       this.sources = {
          meshes: [],
-         shaders: [],
          textures: []
       };
 
@@ -55,6 +54,13 @@ class Scene {
       }
    }
 
+   draw() {
+      this.sources.meshes.test.draw();
+   }
+
+   destroy() {
+      // TODO: IMPORTANT destroy all gl objects and clean memory
+   }
 }
 
 module.exports = Scene;

@@ -3,7 +3,8 @@ const Graph = require('./graph.js');
 const Loader = require('../loaders/main.js');
 
 class SceneManager {
-   constructor() {
+   constructor(camera) {
+      this.camera = camera;
       this.current_scene = { render: function() {}};
    }
 
@@ -17,20 +18,15 @@ class SceneManager {
 
       try {
          var scene = new Scene(id);
+         scene.camera = this.camera;
  
          var graph = new Graph({
-//            camera: camera,
-//            shader: test_shader,
             scene: scene
-//            result_target: {
-//               color: color_result,
-//               depth: depth_result
-//            }
          });
 
          scene.loadScene( () => {
             // remove loading screen
-            //graph.init();
+            graph.init();
             this.current_scene = graph;
          });
 
