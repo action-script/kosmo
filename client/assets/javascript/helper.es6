@@ -85,3 +85,25 @@ exports.keyMap = {
         51: 'key3',
         52: 'key4'
 }
+
+exports.full_screen = {
+   vertices:
+   {
+      name: 'vertices',
+      attrib_size: 3,
+      data: [
+         1, 1, 0,    -1,  1, 0,   -1, -1, 0,
+         1, 1, 0,    -1, -1, 0,    1, -1, 0
+      ]
+      },
+   textures:
+      {
+      name: 'textures',
+      attrib_size: 2,
+      data: [
+         1, 1,    0, 1,    0, 0,
+         1, 1,    0, 0,    1, 0
+      ]
+      }
+};
+

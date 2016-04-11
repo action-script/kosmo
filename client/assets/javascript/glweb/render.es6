@@ -1,28 +1,8 @@
 var GLWeb = require('./main.js');
-var Mesh = require('./mesh.js');
-var FBO = require('./fbo.js');
+const Mesh = require('./mesh.js');
+const FBO = require('./fbo.js');
+const Helper = require('../helper.js');
 var gl = GLWeb.gl;
-
-var full_screen = new Mesh({
-   buffers: [
-      {
-         name: 'vertices',
-         attrib_size: 3, 
-         data: [
-         1, 1, 0,    -1,  1, 0,   -1, -1, 0,
-         1, 1, 0,    -1, -1, 0,    1, -1, 0
-         ]
-      },
-      {
-         name: 'textures',
-         attrib_size: 2,
-         data: [
-         1, 1,    0, 1,    0, 0,
-         1, 1,    0, 0,    1, 0
-         ]
-      }
-   ]
-});
 
 class Render {
    constructor(params) {
@@ -52,6 +32,20 @@ class Render {
       else
          gl.viewport(0, 0, GLWeb.canvas.width, GLWeb.canvas.height);
 
+      if(this.blend)
+         switch (this.blend) {
+            case 'additive':
+               gl.enable(gl.BLEND);
+               gl.blendFunc(gl.ONE, gl.ONE);
+               break;
+            case 'alpha':
+               gl.enable(gl.BLEND);
+               gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+               break;              
+         }
+      else
+         gl.disable(gl.BLEND);
+
       if (this.depth)
          gl.enable(gl.DEPTH_TEST);
       else 
@@ -72,7 +66,7 @@ class Render {
       if (this.draw)
          this.draw();
       else
-         full_screen.draw();
+         Mesh.full_screen.draw();
   
       this.shader.unbind();
   
@@ -105,13 +99,24 @@ class Render {
          flags = gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT | gl.STENCIL_BUFFER_BIT;
       }
       else {
-         if (options.color) {
-            flags |= gl.COLOR_BUFFER_BIT;
-            gl.clearColor.apply(gl, params.color);
+         if (options == false)
+            return
+         else {
+            if (options.color) {
+               flags |= gl.COLOR_BUFFER_BIT;
+               gl.clearColor.apply(gl, options.color);
+            }
+            if(options.depth){
+               flags |= gl.DEPTH_BUFFER_BIT;
+               gl.clearDepth(options.depth);
+            }
+            if(options.stencil){
+               flags |= gl.STENCIL_BUFFER_BIT;
+               gl.clearStencil(options.stencil || 0);
+            }
          }
-         // params depth and stencil
+         gl.clear(flags);
       }
-      gl.clear(flags);
    }
 
    static enable(name) {

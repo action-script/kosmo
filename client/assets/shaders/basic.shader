@@ -21,6 +21,6 @@ uniform vec3 color;
 varying vec4 pos;
 
 void main() {
-  vec3 pixel = color.xyz / (pos.z/2.5);
+  vec3 pixel = color.xyz * (pos.z/10.5);
   gl_FragColor = vec4(pixel, 1.0);
 }
