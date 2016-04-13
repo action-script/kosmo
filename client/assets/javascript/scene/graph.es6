@@ -25,7 +25,8 @@ class Graph {
          shader: Shader.sky,
          draw: () => { sky_mesh.draw(); },
          uniforms: {
-            resolution: [GLWeb.canvas.width, GLWeb.canvas.height]
+            resolution: [GLWeb.canvas.width, GLWeb.canvas.height],
+            ambient: this.scene.tree.root['ambient-color']
          }
       })
 
@@ -46,7 +47,7 @@ class Graph {
          uniforms: {
             projection: {type: 'mat4', data: this.scene.camera.projectionMatrix},
             view: {type: 'mat4', data: this.scene.camera.viewMatrix},
-            color: [0.3, 0.8, 0.7]
+            ambient: this.scene.tree.root['ambient-color']
          }
       });
 

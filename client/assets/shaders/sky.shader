@@ -15,12 +15,13 @@ void main(void) {
 fragment:
 
 uniform vec2 resolution;
+uniform vec3 ambient;
 
 void main() {
    vec2 uv = gl_FragCoord.xy / resolution.xy;
 
-   vec3 ground = vec3(0, 0.8, 0.81);
-   vec3 sky = vec3(0.7, 0.9, 1.);
+   vec3 sky = ambient;
+   vec3 ground = ambient * 1.2;
    vec3 col = mix(ground, sky, uv.y);
 
    gl_FragColor = vec4(col, 1.0);
