@@ -71,6 +71,9 @@ class Scene {
                glMatrix.mat4.rotateZ(node.transform, node.transform, Math.radians(node.rotate[2]));
          }
 
+         if (node.color == undefined || node.color.length == 0)
+            node.color = [0, 0, 0]
+
 
          this.static_meshes.push(node);
 
@@ -85,6 +88,7 @@ class Scene {
    draw() {
       for (let mesh of this.static_meshes) {
          Shader.current.uniform('model', {type: 'mat4', data: mesh.transform});
+         Shader.current.uniform('color', mesh.color);
          this.sources.meshes[mesh.mesh].draw();
       }
    }

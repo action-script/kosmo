@@ -18,9 +18,11 @@ void main(void) {
 fragment:
 
 uniform vec3 color;
+uniform vec3 ambient;
 varying vec4 pos;
 
 void main() {
-  vec3 pixel = color.xyz * (pos.z/10.5);
-  gl_FragColor = vec4(pixel, 1.0);
+   float distance = pos.z/10.0;
+   vec3 pixel = mix(color, ambient, distance);
+   gl_FragColor = vec4(pixel, 1.0);
 }
