@@ -9,6 +9,7 @@ var shaders = require('./shaders.js');
 
 // constant shaders
 Shader.basic = new Shader(shaders.basic_shader);
+Shader.light = new Shader(shaders.light_shader);
 Shader.screen_pass = new Shader(shaders.pass_shader);
 Shader.sky = new Shader(shaders.sky_shader);
 

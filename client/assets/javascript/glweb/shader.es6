@@ -96,8 +96,11 @@ class Shader {
 
    getUniformLocation(name) {
       var uniform_location = this.uniform_locations[name];
-      if (uniform_location === undefined)
+      if (uniform_location === undefined) {
          var uniform_location = this.uniform_locations[name] = gl.getUniformLocation(this.program, name);
+      }
+      if (uniform_location == null)
+         throw ('uniform not found ' + name)
       return uniform_location;
    }
 
@@ -110,9 +113,9 @@ class Shader {
          gl.uniformMatrix3fv(uniform_location, false, value.data);
       }
       else if (typeof(value) == 'number') {
-         if (isInt(value))
+         if (Math.isInt(value))
             gl.uniform1i(uniform_location, value);
-         else if (isFloat(value))
+         else if (Math.isFloat(value))
             gl.uniform1f(uniform_location, value);
       }
       else if (typeof(value) == 'object') {

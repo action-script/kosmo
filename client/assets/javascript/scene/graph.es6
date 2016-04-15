@@ -1,8 +1,8 @@
 var GLWeb = require('../glweb/main.js');
+const Sky = require('./sky.js');
+const Sun = require('../lights/sun');
 const Render = require('../glweb/render.js');
 const Shader = require('../glweb/shader.js');
-const Mesh = require('../glweb/mesh.js');
-const Helper = require('../helper.js');
 const Texture = require('../glweb/texture.js');
 const RenderBuffer = require('../glweb/renderbuffer.js');
 var gl = GLWeb.gl;
@@ -17,22 +17,17 @@ class Graph {
       var color_result = new Texture();
       var depth_result = new RenderBuffer(RenderBuffer.DEPTH);
 
-      var sky_mesh = new Mesh({
-         buffers: [ Helper.full_screen.vertices]
-      });
+      //if (options.sun)
+      this.sun = new Sun(); 
 
-      this.scene_sky = new Render({
-         shader: Shader.sky,
-         draw: () => { sky_mesh.draw(); },
-         uniforms: {
-            resolution: [GLWeb.canvas.width, GLWeb.canvas.height],
-            ambient: this.scene.tree.root['ambient-color']
-         }
-      })
+      this.sky = new Sky({
+         ambient_color: this.scene.tree.root['ambient-color'],
+         sun: this.sun  
+      });
 
       // TODO: render all processor (normals, difuse)
       this.scene_render = new Render({
-         shader: Shader.basic,
+         shader: Shader.light,
          result_target: {
             color: color_result,
             depth: depth_result
@@ -47,7 +42,10 @@ class Graph {
          uniforms: {
             projection: {type: 'mat4', data: this.scene.camera.projectionMatrix},
             view: {type: 'mat4', data: this.scene.camera.viewMatrix},
-            ambient: this.scene.tree.root['ambient-color']
+            ambient: this.scene.tree.root['ambient-color'],
+            'sunlight.color': this.sun.color,
+            'sunlight.direction': this.sun.direction,
+            'sunlight.ambientintensity': this.sun.ambient_intensity
          }
       });
 
@@ -65,7 +63,7 @@ class Graph {
    render() {
       // TODO: sky, scene, fx, pass
       // render sky
-      this.scene_sky.render();
+      this.sky.render();
 
       // color scene render
       this.scene_render.render();

@@ -2,6 +2,12 @@
    Math.radians = (degrees) => {
       return degrees * Math.PI / 180
    }
+   Math.isInt = (n) => {
+      return Number(n) === n && n % 1 === 0;
+   }
+   Math.isFloat = (n) => {
+      return Number(n) === n && n % 1 !== 0;
+   }
 })();
 
 (() => {
