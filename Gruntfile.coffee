@@ -100,6 +100,9 @@ module.exports = (grunt) ->
          client_scripts:
             files: ['client/assets/javascript/**/*.es6']
             tasks: ['build_client']
+         shader_scripts:
+            files: ['client/assets/shaders/**/*.shader']
+            tasks: ['convert_shaders','copy:shaders_public','webpack:dev']
 
       copy:
          app_build:
@@ -109,8 +112,11 @@ module.exports = (grunt) ->
             ]
          client_public:
             files: [
-              {expand: true, cwd: 'client/assets/shaders', src: ['**'], dest: 'public/shaders/'}
               {expand: true, cwd: 'client/assets/stylesheets', src: ['**'], dest: 'public/style/'}
+            ]
+         shaders_public:
+            file: [
+              {expand: true, cwd: 'client/assets/shaders', src: ['**'], dest: 'public/shaders/'}
             ]
 
       clean:
@@ -159,6 +165,7 @@ module.exports = (grunt) ->
       "babel:client"
       "convert_shaders"
       "copy:client_public"
+      "copy:shaders_public"
       "webpack:dev"
    ])
 
