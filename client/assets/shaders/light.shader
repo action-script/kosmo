@@ -13,7 +13,7 @@ varying vec3 normal;
 
 void main(void) {
    pos = projection * view * model * vec4(vertices, 1.0);
-   normal = normalize(model * vec4(vertexNormals, 1.0)).xyz;
+   normal = normalize(mat3(model) * vertexNormals).xyz;
    gl_Position = projection * view * model * vec4(vertices, 1.0);
 }
 
@@ -38,8 +38,8 @@ void main() {
    vec3 light_color = color * sunlight.color *
       (diffuseintensity + sunlight.ambientintensity);
 
-   float distance = pos.z/10.0;
-   vec3 pixel = mix(light_color, ambient, distance);
+   float distance = pos.z/20.0;
+   vec3 pixel = mix(light_color, ambient, min(distance, 1.));
 
    gl_FragColor = vec4(pixel, 1.0);
 }
