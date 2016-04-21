@@ -11,16 +11,19 @@ class SceneTree {
       var scene_obj = JSON.parse(json_tree);
       this.id = scene_obj['_id'];
       this.root = scene_obj[SceneTree.TREE_NAME][SceneTree.ROOT_NAME];
-      this.nodes = scene_obj[SceneTree.TREE_NAME][SceneTree.NODES_NAME][0];
+      this.nodes = scene_obj[SceneTree.TREE_NAME][SceneTree.WORLD_NAME][0];
    }
 
    iterate(root = this.nodes) {
       return (function* iterate(current, depth) {
-         yield {node: current, depth: depth};
+         if (current.mesh !== undefined) {
+            yield {node: current, depth: depth};
+            ++depth;
+         }
          var nodes = current[SceneTree.NODES_NAME];
          if (nodes !== undefined)
             for (var i = 0, len = nodes.length; i < len; i++) {
-               yield* iterate(nodes[i], depth + 1);
+               yield* iterate(nodes[i], depth);
             }
       })(root,0);
    }
@@ -45,6 +48,7 @@ class SceneTree {
 // const
 SceneTree.TREE_NAME = 'scene';
 SceneTree.ROOT_NAME = 'root';
+SceneTree.WORLD_NAME = 'world';
 SceneTree.NODES_NAME = 'nodes';
 SceneTree.AMBIANCE_NAME = 'ambiance';
 

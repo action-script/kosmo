@@ -55,10 +55,6 @@ class Scene {
             node.transform = glMatrix.mat4.create();
          else
             node.transform = glMatrix.mat4.copy([], last_level_item[depth-1].transform);
-
-         if (node.scale && node.scale.length > 0)
-            glMatrix.mat4.scale(node.transform, node.transform, node.scale);
-
          if (node.translate && node.translate.length > 0)
             glMatrix.mat4.translate(node.transform, node.transform, node.translate);
 
@@ -70,6 +66,10 @@ class Scene {
             if(node.rotate[2] != 0)
                glMatrix.mat4.rotateZ(node.transform, node.transform, Math.radians(node.rotate[2]));
          }
+
+         if (node.scale && node.scale.length > 0)
+            glMatrix.mat4.scale(node.transform, node.transform, node.scale);
+
 
          if (node.color == undefined || node.color.length == 0)
             node.color = [0, 0, 0]
