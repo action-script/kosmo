@@ -14,9 +14,11 @@ class CameraController extends Camera {
       this.move_speed = 0.1;
 
       this.events = {
+         'this.el#click': 'mouseLock',
+         //'document#mousemove': 'rotateLock',
          'this.el#mousedown': 'click',
          'this.el#mouseup': 'releaseClick',
-         'this.el#mousemove': 'rotate',
+         //'this.el#mousemove': 'rotate',
          'document#keydown': 'type',
          'document#keyup': 'releaseType'
       }
@@ -101,6 +103,12 @@ class CameraController extends Camera {
    }
 
    // events
+   mouseLock(event) {
+      // mouse Lock
+      event.toElement.requestPointerLock();
+      document.addEventListener('mousemove', (this.rotateLock).bind(this), false);
+   }
+
    click(event) {
       if (event.button == 0) {
          this.start_x = event.pageX;
@@ -114,8 +122,20 @@ class CameraController extends Camera {
          this.mouse_pressed = false;
    }
 
+   rotateLock(event) {
+      if(document.pointerLockElement) {
+         var x_dif = event.movementX;
+         var y_dif = event.movementY;
+         glMatrix.vec3.add(
+            this.rotation_offset,
+            this.rotation_offset,
+            [y_dif * this.rotation_speed, x_dif * this.rotation_speed, 0]
+         );
+      }
+   }
+
    rotate(event) {
-      if (this.mouse_pressed) {
+      if (this.mouse_pressed && !document.pointerLockElement) {
          var x_dif = event.pageX - this.start_x;
          var y_dif = event.pageY - this.start_y;
          this.start_x = event.pageX;

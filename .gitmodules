@@ -1,0 +1,3 @@
+[submodule "submodules/game-shim"]
+	path = submodules/game-shim
+	url = https://github.com/action-script/game-shim.git
