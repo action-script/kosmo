@@ -47,7 +47,7 @@ class CameraController extends Camera {
          z' = z*cos q - x*sin q
          */
          // rotation X
-         var rotation = Math.radians( this.rotation_offset[x] );
+         var rotation = -Math.radians( this.rotation_offset[x] );
          glMatrix.vec3.set(
             result,
             centred[x], // x
@@ -60,7 +60,7 @@ class CameraController extends Camera {
          centred[2] = result[2];
 
          // totation Y
-         var rotation = Math.radians( this.rotation_offset[y] );
+         var rotation = -Math.radians( this.rotation_offset[y] );
          glMatrix.vec3.set(
             result,
             centred[z] * Math.sin(rotation) + centred[x] * Math.cos(rotation),// x
