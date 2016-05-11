@@ -7,11 +7,14 @@ const Camera = require('./cameraController.js');
 const SceneManager = require('./scene/main.js');
 var shaders = require('./shaders.js');
 
+// TODO. use one FBO and switch the attached textures instead of create multiple fbo and switch them.
+
 // constant shaders
 Shader.basic = new Shader(shaders.basic_shader);
 Shader.light = new Shader(shaders.light_shader);
 Shader.screen_pass = new Shader(shaders.pass_shader);
 Shader.sky = new Shader(shaders.sky_shader);
+Shader.blur = new Shader(shaders.blur_shader);
 
 // constant meshes
 Mesh.full_screen = new Mesh({

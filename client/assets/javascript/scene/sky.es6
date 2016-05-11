@@ -3,6 +3,7 @@ const Mesh = require('../glweb/mesh.js');
 const Render = require('../glweb/render.js');
 const Shader = require('../glweb/shader.js');
 const Helper = require('../helper.js');
+var gl = GLWeb.gl;
 
 class Sky {
    constructor(options) {
@@ -14,6 +15,7 @@ class Sky {
       this.sky_render = new Render({
          shader: Shader.sky,
          draw: () => { sky_mesh.draw(); },
+         cull: gl.BACK,
          uniforms: {
             resolution: [GLWeb.canvas.width, GLWeb.canvas.height],
             ambient: options.ambient_color

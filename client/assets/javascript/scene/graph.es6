@@ -1,12 +1,13 @@
 var GLWeb = require('../glweb/main.js');
 const Sky = require('./sky.js');
 const Sun = require('../lights/sun');
+const Blur = require('./lensblur.js');
 const Render = require('../glweb/render.js');
 const Shader = require('../glweb/shader.js');
 const Texture = require('../glweb/texture.js');
 const RenderBuffer = require('../glweb/renderbuffer.js');
+const Helper = require('../helper.js');
 var gl = GLWeb.gl;
-
 
 class Graph {
    constructor(params) {
@@ -15,6 +16,7 @@ class Graph {
 
    init() { 
       var color_result = new Texture();
+      var blur_result = new Texture();
       var depth_result = new RenderBuffer(RenderBuffer.DEPTH);
 
       //if (options.sun)
@@ -49,6 +51,15 @@ class Graph {
          }
       });
 
+      this.blur = new Blur({
+         repeat: 2,
+         result_target: {
+            color: blur_result
+         },
+         source: color_result
+      });
+
+
       this.screen_render = new Render({
          shader: Shader.screen_pass,
          cull: gl.BACK,
@@ -69,6 +80,7 @@ class Graph {
       this.scene_render.render();
 
       // on screen fx pass
+      //this.blur.render();
       this.screen_render.render();
    }
 }
