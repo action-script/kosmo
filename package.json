@@ -37,6 +37,7 @@
     "webpack-dev-server": "^1.14.1"
   },
   "dependencies": {
+    "co": "^4.6.0",
     "koa": "~1.1.2",
     "koa-hbs": "~0.8.0",
     "koa-json-body": "^4.0.0",
