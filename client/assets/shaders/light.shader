@@ -33,7 +33,7 @@ struct directionalLight {
 uniform directionalLight sunlight;
 
 void main() {
-   float diffuseintensity = max( dot( normal, -sunlight.direction ), 0. );
+   float diffuseintensity = max( dot( normal, -sunlight.direction ), 0.8 );
 
    vec3 light_color = color * sunlight.color *
       (diffuseintensity + sunlight.ambientintensity);
