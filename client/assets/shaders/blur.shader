@@ -1,6 +1,5 @@
-// Author Nuño de la Serna.
-// Copyrights licensed under the Apache License v2.0.
-// See the accompanying LICENSE file for terms.
+// Based on the code of Matt DesLauriers
+// https://github.com/Jam3/glsl-fast-gaussian-blur/blob/master/13.glsl
 
 vertex:
 
