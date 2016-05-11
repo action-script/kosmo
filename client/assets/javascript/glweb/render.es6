@@ -11,7 +11,7 @@ class Render {
       if (params.result_target) {
          this.fbo = params.fbo ? params.fbo : new FBO();
          this.fbo.attachColor(params.result_target.color);
-         if (params.result_target.depth);
+         if (params.result_target.depth !== undefined)
             this.fbo.attachDepth(params.result_target.depth);
          // depth and stencil
          this.fbo.checkFboSatus();
