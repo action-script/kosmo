@@ -17,6 +17,7 @@ $ sudo npm install -g bower
 Load dependencies and compile:
 ```sh
 $ npm install
+$ bower install
 ```
 Compile code:
 ```sh
