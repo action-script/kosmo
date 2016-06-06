@@ -31,6 +31,6 @@ $ npm start
 License
 ----
 
-Copyright (c) 2015 Nuño de la Serna
+Copyright (c) 2016 Nuño de la Serna
 
 Licensed under the Apache License Version 2.0
