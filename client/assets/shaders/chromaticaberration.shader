@@ -27,10 +27,9 @@ void main(void) {
    vec4 rca = texture2D( source, vtexcoord - vec2(-far*qnt, 0.) );
    vec4 gca = texture2D( source, vtexcoord - vec2( .0, .0) );
    vec4 bca = texture2D( source, vtexcoord - vec2(far*qnt, 0.) );
-   vec4 aca = texture2D( source, vtexcoord);
 
    // Combine the offset colors.
-   gl_FragColor = vec4(rca.r, gca.g, bca.b, aca.a);
+   gl_FragColor = vec4(rca.r, gca.g, bca.b, 1.);
 }
     
 
