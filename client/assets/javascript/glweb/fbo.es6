@@ -56,6 +56,25 @@ class FBO {
    }
 
    attachDepth(buffer = null) {
+      if (buffer.texture != undefined)
+         this.attachDepthTexture(buffer);
+      else
+         this.attachDepthRenderBuffer(buffer);
+   }
+
+   attachDepthTexture(texture) {
+      this.bind();
+      gl.framebufferTexture2D(
+         gl.FRAMEBUFFER,         // target
+         gl.DEPTH_ATTACHMENT,    // attachment pointer
+         texture.target,         // texture target
+         texture.texture,        // texture id
+         0                       // mipmap level of the texture to be attached
+      );
+      this.unbind();
+   }
+
+   attachDepthRenderBuffer(buffer) {
       this.bind();
       gl.framebufferRenderbuffer(
          gl.FRAMEBUFFER,               // target
