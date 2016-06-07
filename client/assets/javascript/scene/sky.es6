@@ -16,6 +16,8 @@ class Sky {
          shader: Shader.sky,
          draw: () => { sky_mesh.draw(); },
          cull: gl.BACK,
+         fbo: options.fbo ? options.fbo : false,
+         result_target: options.result_target,
          uniforms: {
             resolution: [GLWeb.canvas.width, GLWeb.canvas.height],
             ambient: options.ambient_color

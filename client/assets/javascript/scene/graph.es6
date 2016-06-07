@@ -17,10 +17,12 @@ class Graph {
    init() {
       // important. enable depth texture extension
       var depthTextureExt = gl.getExtension('WEBKIT_WEBGL_depth_texture');
+
+      var scene_result = new Texture();
       var color_result = new Texture();
-      // scale blur size for optimization
-      var blur_result = new Texture();
+      var blur_result = new Texture();  // TODO: scale blur size for optimization
       var ca_result = new Texture();
+
       var depth_result = new Texture({
          channels: 'DEPTH_COMPONENT',
          type: 'UNSIGNED_SHORT'
@@ -32,7 +34,10 @@ class Graph {
 
       this.sky = new Sky({
          ambient_color: this.scene.tree.root['ambient-color'],
-         sun: this.sun  
+         sun: this.sun,
+         result_target: {
+            color: scene_result
+         }
       });
 
       // TODO: render all processor (normals, difuse)
@@ -64,7 +69,7 @@ class Graph {
          result_target: {
             color: blur_result
          },
-         source: color_result
+         source: scene_result
       });
 
       this.chromaticaberration = new Render({
@@ -74,11 +79,23 @@ class Graph {
             color: ca_result
          },
          samplers: {
-            source: color_result,
+            source: scene_result,
             depth: depth_result
          }
       });
 
+      this.combine =  new Render({
+         shader: Shader.screen_pass,
+         cull: gl.BACK,
+         result_target: {
+            color: scene_result
+         },
+         samplers: {
+            source: color_result
+         },
+         blend: 'alpha',
+         clear_options: false
+      });
 
       this.screen_render = new Render({
          shader: Shader.screen_pass,
@@ -100,6 +117,9 @@ class Graph {
 
       // color scene render
       this.scene_render.render();
+
+      // combine sky and scene
+      this.combine.render();
 
       // on screen fx pass
       //this.blur.render();
