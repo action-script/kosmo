@@ -15,6 +15,7 @@ Shader.light = new Shader(shaders.light_shader);
 Shader.screen_pass = new Shader(shaders.pass_shader);
 Shader.sky = new Shader(shaders.sky_shader);
 Shader.blur = new Shader(shaders.blur_shader);
+Shader.chromaticaberration = new Shader(shaders.chromaticaberration_shader);
 
 // constant meshes
 Mesh.full_screen = new Mesh({

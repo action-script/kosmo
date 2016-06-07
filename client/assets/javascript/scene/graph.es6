@@ -14,10 +14,18 @@ class Graph {
       Object.assign(this, params);
    }
 
-   init() { 
+   init() {
+      // important. enable depth texture extension
+      var depthTextureExt = gl.getExtension('WEBKIT_WEBGL_depth_texture');
       var color_result = new Texture();
+      // scale blur size for optimization
       var blur_result = new Texture();
-      var depth_result = new RenderBuffer(RenderBuffer.DEPTH);
+      var ca_result = new Texture();
+      var depth_result = new Texture({
+         channels: 'DEPTH_COMPONENT',
+         type: 'UNSIGNED_SHORT'
+      });
+      var depth_buffer = new RenderBuffer(RenderBuffer.DEPTH);
 
       //if (options.sun)
       this.sun = new Sun(); 
@@ -59,12 +67,26 @@ class Graph {
          source: color_result
       });
 
+      this.chromaticaberration = new Render({
+         shader: Shader.chromaticaberration,
+         cull: gl.BACK,
+         result_target: {
+            color: ca_result
+         },
+         samplers: {
+            source: color_result,
+            depth: depth_result
+         }
+      });
+
 
       this.screen_render = new Render({
          shader: Shader.screen_pass,
          cull: gl.BACK,
          samplers: {
-            source: color_result
+            source: ca_result
+            //source: color_result
+            //source: depth_result
          },
          blend: 'alpha',
          clear_options: false
@@ -81,6 +103,7 @@ class Graph {
 
       // on screen fx pass
       //this.blur.render();
+      this.chromaticaberration.render();
       this.screen_render.render();
    }
 }
