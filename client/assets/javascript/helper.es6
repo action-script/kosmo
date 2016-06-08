@@ -92,6 +92,20 @@ exports.keyMap = {
         52: 'key4'
 }
 
+exports.Events = class Events {
+   constructor() {
+   }
+}
+
+exports.delegateEvents = function ($, events, reference) {
+   return (function($, events) {
+      for (let event in events) {
+         var [selector, event_triger] = event.split('#');
+         $(eval(selector)).on(event_triger, (this[events[event]]).bind(this));
+      }
+   }).bind(reference)($,events)
+}
+
 exports.full_screen = {
    vertices:
    {

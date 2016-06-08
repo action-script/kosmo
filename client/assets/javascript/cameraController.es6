@@ -26,7 +26,8 @@ class CameraController extends Camera {
       this.keys = {};
 
       this.el = GLWeb.canvas;
-      this.delegateEvents();
+      Helper.delegateEvents($, this.events, this);
+      this.mouse_pressed = false;
    }
 
    calculateView() {
@@ -92,14 +93,6 @@ class CameraController extends Camera {
 
       this.projectionMatrix = this.getProjectionMatrix();
       this.viewMatrix = this.getViewMatrix();
-   }
-
-   delegateEvents() {
-      for (let event in this.events) {
-         var [selector, event_triger] = event.split('#');
-         $(eval(selector)).on(event_triger, (this[this.events[event]]).bind(this));
-      }
-      this.mouse_pressed = false;
    }
 
    // events
