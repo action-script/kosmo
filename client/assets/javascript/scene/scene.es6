@@ -3,6 +3,7 @@ const SceneTree = require('./tree.js');
 const OBJLoader = require('../loaders/obj.js');
 const Mesh = require('../glweb/mesh.js');
 const Shader = require('../glweb/shader.js');
+const Helper = require('../helper.js');
 const $ = require('../../externals/jquery/dist/jquery.js');
 const glMatrix = require('../../externals/gl-matrix/dist/gl-matrix-min.js');
 
@@ -87,9 +88,17 @@ class Scene {
 
    draw() {
       for (let mesh of this.static_meshes) {
-         Shader.current.uniform('model', {type: 'mat4', data: mesh.transform});
-         Shader.current.uniform('color', mesh.color);
+         Shader.current.uniform( 'model', {type: 'mat4', data: mesh.transform} );
+         Shader.current.uniform( 'color', mesh.color );
          this.sources.meshes[mesh.mesh].draw();
+      }
+   }
+
+   drawPositions() {
+      for (let [i, mesh] of this.static_meshes.entries()) {
+         Shader.current.uniform( 'model', {type: 'mat4', data: mesh.transform} );
+         Shader.current.uniform( 'color', Helper.ColorTool.toRGB(i+1) );
+         this.sources.meshes[mesh.mesh].drawPosition();
       }
    }
 
