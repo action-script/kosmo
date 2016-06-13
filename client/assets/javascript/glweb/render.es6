@@ -115,8 +115,8 @@ class Render {
                gl.clearStencil(options.stencil || 0);
             }
          }
-         gl.clear(flags);
       }
+      gl.clear(flags);
    }
 
    static enable(name) {

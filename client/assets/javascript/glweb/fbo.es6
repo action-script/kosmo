@@ -18,19 +18,19 @@ class FBO {
             //console.log('framebuffer complete');
             break;
          case gl.FRAMEBUFFER_UNSUPPORTED:
-            throw 'Error: video card does NOT support framebuffer object';
+            throw 'FBO Error: video card does NOT support framebuffer object';
             break;
          case gl.FRAMEBUFFER_INCOMPLETE_ATTACHMENT:
-            throw 'Error: framebuffer incomplete attachment';
+            throw 'FBO Error: framebuffer incomplete attachment';
             break;
          case gl.FRAMEBUFFER_INCOMPLETE_DIMESIONS:
-            throw 'Error: framebuffer incomplete dimensions';
+            throw 'FBO Error: framebuffer incomplete dimensions';
             break;
          case gl.FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT:
-            throw 'Error: framebuffer incomplete missing attachment';
+            throw 'FBO Error: framebuffer incomplete missing attachment';
             break;
          default:
-            throw 'Error: not a valuated error';
+            throw 'FBO Error: not a valuated error';
       }
       this.unbind();
    }

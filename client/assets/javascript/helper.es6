@@ -106,6 +106,19 @@ exports.delegateEvents = function ($, events, reference) {
    }).bind(reference)($,events)
 }
 
+exports.ColorTool = {
+   toRGB: (value) => {
+      return [
+         (value & 0xff0000) >> 16,
+         (value & 0x00ff00) >> 8,
+         (value & 0x0000ff)
+      ];
+   },
+   toDecimal: (rgb) => {
+      return (rgb[0] << 16) + (rgb[1] << 8) + (rgb[2]);
+   }
+}
+
 exports.full_screen = {
    vertices:
    {

@@ -26,6 +26,12 @@ class Mesh {
       this.vbo.unbind();
    }
 
+   drawPosition() {
+      this.vbo.bind([this.vbo.buffers[0]]);
+      this.vbo.draw();
+      this.vbo.unbind();
+   }
+
    static jsonParse(mesh_string) {
       var result = { buffers: [] };
       var mesh = JSON.parse(mesh_string);

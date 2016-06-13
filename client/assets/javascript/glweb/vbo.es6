@@ -65,8 +65,8 @@ class VBO {
       );
    }
 
-   bind() {
-      for (let buffer of this.buffers) {
+   bind(buffers = this.buffers) {
+      for (let buffer of buffers) {
          this.setUpAttribPointer(buffer);
       }
       if (this.isElementMesh)
